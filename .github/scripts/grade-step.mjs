@@ -142,8 +142,13 @@ export const checks = {
     );
     for (const resource of resources) {
       const { file, text } = resourceComponent(root, resource);
+      const usesSharedFetch =
+        /\bCollectionPage\b/.test(text) &&
+        /\bfetchCollection\b/.test(frontend) &&
+        /\bfetch\s*\(/.test(frontend);
       assertValid(
-        new RegExp(`/api/${resource}/?`, 'i').test(text) && /\b(?:fetch|axios)\b/i.test(text),
+        new RegExp(`/api/${resource}/?`, 'i').test(text) &&
+          (/\b(?:fetch|axios)\b/i.test(text) || usesSharedFetch),
         `${file} must request /api/${resource}/`,
       );
       const componentName = path.basename(file, path.extname(file));

@@ -2,7 +2,9 @@ const codespaceName = import.meta.env.VITE_CODESPACE_NAME?.trim()
 
 export const API_BASE_URL = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
-  : 'http://localhost:8000'
+  : import.meta.env.DEV
+    ? ''
+    : 'http://localhost:8000'
 
 function getCollectionItems(payload) {
   if (Array.isArray(payload)) {

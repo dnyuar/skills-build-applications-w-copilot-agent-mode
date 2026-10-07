@@ -10,9 +10,31 @@ import { Workout } from './models/workout';
 const app = express();
 const port = 8000;
 const codespaceName = process.env.CODESPACE_NAME;
+const allowedOrigins = new Set([
+  'http://localhost:5173',
+  ...(codespaceName ? [`https://${codespaceName}-5173.app.github.dev`] : []),
+]);
 export const apiBaseUrl = codespaceName
   ? `https://${codespaceName}-8000.app.github.dev`
   : 'http://localhost:8000';
+
+app.use((request, response, next) => {
+  const origin = request.get('Origin');
+  response.setHeader('Vary', 'Origin');
+
+  if (origin && allowedOrigins.has(origin)) {
+    response.setHeader('Access-Control-Allow-Origin', origin);
+
+    if (request.method === 'OPTIONS') {
+      response.setHeader('Access-Control-Allow-Methods', 'GET, OPTIONS');
+      response.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      response.sendStatus(204);
+      return;
+    }
+  }
+
+  next();
+});
 
 app.use(express.json());
 
@@ -57,4 +79,3 @@ void startServer().catch((error: unknown) => {
   console.error('Unable to start OctoFit API:', error);
   process.exitCode = 1;
 });
-// comment

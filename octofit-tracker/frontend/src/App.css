@@ -1,0 +1,44 @@
+.app-shell {
+  min-height: 100vh;
+}
+
+.app-navbar {
+  background: #163b65;
+  box-shadow: 0 2px 12px rgb(23 43 77 / 12%);
+}
+
+.app-nav {
+  flex-wrap: wrap;
+}
+
+.app-nav .nav-link {
+  color: rgb(255 255 255 / 78%);
+}
+
+.app-nav .nav-link:hover,
+.app-nav .nav-link.active {
+  color: #fff;
+}
+
+.page-heading {
+  color: #163b65;
+  font-weight: 700;
+}
+
+.data-panel {
+  border: 0;
+  border-radius: 0.8rem;
+  box-shadow: 0 8px 24px rgb(23 43 77 / 8%);
+}
+
+.data-table th {
+  color: #526581;
+  font-size: 0.8rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.data-table td {
+  vertical-align: middle;
+}
